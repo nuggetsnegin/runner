@@ -2,57 +2,39 @@
  I made 1 singular component but if I had multiple products I would break it down into a Products and Product component-->
 <template>
   <div class="product-container">
-    <h2>Black Valentino dress with tulle</h2>
+    <h2> {{product[0].title ? product[0].title : 'No title found'}} </h2>
 
     <div class="tags-container">
-      <span class="popular">Popular</span>
+      <span class="popular" v-bind:key="tag.id" v-for="tag in product[0].tags">{{tag}}</span>
       <img class="favorite" src="../assets/iconFavourite.svg" />
     </div>
     <!--.tags-->
 
     <div class="rating-container">
       <ul class="star-rating">
-        <li>
-          <img src="../assets/iconActiveStar.svg" />
-        </li>
-        <li>
-          <img src="../assets/iconActiveStar.svg" />
-        </li>
-        <li>
-          <img src="../assets/iconActiveStar.svg" />
-        </li>
-        <li>
-          <img src="../assets/iconActiveStar.svg" />
-        </li>
-        <li>
+        <li v-bind:key="rating.id" v-for="rating in product[0].average_rating">
           <img src="../assets/iconActiveStar.svg" />
         </li>
       </ul>
-      <span class="number-rating">132 reviews</span>
+      <span class="number-rating">{{product[0].number_of_reviews}}</span>
     </div>
     <!--.rating-->
 
     <div class="info-container">
-      <div class="product-info"></div>
-      <div class="product-brand"></div>
-      <div class="product-delivery"></div>
+      <div class="product-info">{{product[0].info}}</div>
+      <div class="product-brand">{{product[0].brand}}</div>
+      <div class="product-delivery">{{product[0].delivery}}</div>
     </div>
     <!--.info-->
 
     <div class="options-container">
       <div class="size">
-        <h3>Size</h3>
+        <h3>Sizes</h3>
         <span>Size Guide</span>
-        <button>XS</button>
-        <button>S</button>
-        <button>M</button>
+        <div class="sizes" v-bind:key="size.id" v-for="size in product[0].sizes"><button>{{size}}</button></div>
       </div>
-      <div class="color">
-        <h3>Color</h3>
-        <button></button>
-        <button></button>
-        <button></button>
-      </div>
+
+      <div class="color" v-bind:key="color.id" v-for="color in product[0].colors"><button>{{color}}</button></div>
     </div>
     <!--.options-->
 
@@ -70,7 +52,7 @@ export default {
   /*using axios to make first api call for auth token and then another api call for the test data using the auth token*/
   data() {
     return {
-      products: [],
+      product: [], //not necessary to use an array here but would make sense if we had multiple products
     };
   },
   mounted() {
@@ -94,7 +76,8 @@ export default {
       )
       .then((response) => {
         if (response) {
-          this.products.push(response.data);
+          this.product.push(response.data);
+          console.log(this.product)
         } else {
           console.log("Something went wrong. 😒");
         }
