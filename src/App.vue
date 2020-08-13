@@ -3,7 +3,6 @@
     <Header/>
     <Gallery/>
     <Product/>
-    <Products/>
   </div>
 </template>
 
@@ -11,7 +10,6 @@
 import Header from './components/Header.vue'
 import Gallery from './components/Gallery.vue'
 import Product from './components/Product.vue'
-import Products from './components/Products.vue'
 
 export default {
   name: 'App',
@@ -19,7 +17,6 @@ export default {
     Header,
     Gallery,
     Product,
-    Products
   }
 }
 </script>
